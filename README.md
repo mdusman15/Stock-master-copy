@@ -12,6 +12,7 @@ This project is built using the .NET framework and the MVC architecture. The fro
 - Obtain historical data of the stock
 
 ## Upcoming Features
+- Front-end development
 - Crypto and commodities analysis
 - Machine learning model for predicting stock prices based on world events
 - A thorough process to analyze security according to Graham's investing principles
