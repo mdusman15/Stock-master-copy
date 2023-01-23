@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Stock Market Analysis</h1>
+    <p>Learn more about <a href="https://escis.com/">the project</a>.</p>
+</div>
+
+<style>
+
+    .box {
+        width: 350px;
+        height: 400px;
+        background-image: url('https://g.foolcdn.com/editorial/images/716788/stock-chart-crash-correction-plunge-bounce-bear-market-bar-trend-invest-crypto-getty.jpg');
+        background-size: cover; /* scale the image to fit the box */
+        border: 2px solid #333;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+        /* Add white space to the top and left of the box */
+        margin-top: 90px;
+        margin-left: 32px;
+        margin-bottom: 300px;
+        float: left;
+    }
+
+        .box:nth-child(2) {
+            margin-left: 10px; /* adjust as needed */
+        }
+
+        .box:nth-child(3) {
+            margin-left: 90px; /* adjust as needed */
+        }
+
+    .inner-box {
+        width: 350px;
+        height: 80px;
+        background-color: #90EE90;
+        border: 2px solid #333;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+        margin-top: 375px;
+        margin-left: -2px;
+        color: grey;
+        padding-top: 20px;
+        float: left;
+    }
+
+    body {
+        background-image: url("https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm422-047-kq92wx9y.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b4691601fc97c7e239f0462f567837b6");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.3px;
+    }
+</style>
+
+
+<body>
+
+    <div class="box">
+        <div class="inner-box">
+            Stocks
+        </div>
+    </div>
+    <div class="box">
+        <div class="inner-box">
+            Crypto
+        </div>
+    </div>
+    <div class="box">
+        <div class="inner-box">
+            Commodity
+        </div>
+    </div>
+
+
+
+    <script>const boxes = document.querySelectorAll(".box");
+
+        boxes.forEach((box, index) => {
+            box.addEventListener("click", event => {
+                if (index === 0) {
+                    window.open("/Stock", "_self");
+                }
+                else if (index === 1) {
+                    window.open("/Stock", "_self");
+                }
+                else if (index === 2) {
+                    window.open("/Stock", "_self");
+                }
+            });
+        });</script>
+
+
+</body>

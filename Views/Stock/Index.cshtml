@@ -1,0 +1,352 @@
+﻿@model Stock.Models.StockModel
+
+@{
+    ViewData["Title"] = "Stock Information";
+}
+
+<div style="background-color: #00C851; padding: 13px; text-align: center; font-size: 50px; font-weight: bold; color: white;">Market Analysis (Monthly)</div>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+
+
+<script>/* Add a fade in effect to the page when it loads */
+    $(document).ready(function () {
+        $("body").fadeIn(1000);
+    });</script>
+
+<style>
+
+    header {
+        background-color: white;
+        color: black;
+        text-align: center;
+        padding-top: -10px;
+    }
+
+
+
+    .indent1 {
+        font-size: 14px;
+        width: 250px; /*set a fixed width for the div*/
+        padding: 10px; /*add padding to the div*/
+        position: absolute; /*position the div in a specific location on the page*/
+        top: 320px; /*set the top position*/
+        right: 120px; /*set the right position*/
+    }
+
+    .indent2 {
+        font-size: 14px;
+        width: 200px;
+        padding: 10px;
+        position: absolute;
+        top: 350px;
+        right: 170px;
+    }
+
+    .exchange {
+        font-size: 14px;
+        width: 200px;
+        padding: 10px;
+        position: absolute;
+        top: 380px;
+        right: 170px;
+    }
+
+
+    input[type="text"] {
+        width: 600px;
+    }
+
+    }
+    /* Add a background color to the body */
+    body {
+        background-color: #f2f2f2;
+    }
+
+    /* Add some padding and margin to the form */
+    form {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    /* Style the label and input elements */
+    label, input {
+        font-size: 18px;
+        margin: 10px;
+    }
+
+        /* Style the submit button */
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+            /* Add a hover effect to the submit button */
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+    /* Style the table elements */
+    table {
+        width: 95%;
+        border-collapse: collapse;
+        margin-left: 35px;
+    }
+
+    .table-container {
+        overflow-y: scroll;
+        height: 300px; /* set a fixed height for the container */
+        overflow-x: scroll; /* horizontal scrollbar */
+        overflow-y: scroll; /* vertical scrollbar */
+    }
+
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+        td.first-column {
+            background-color: #d6d2d2;
+            width: 130px;
+        }
+
+    th {
+        background-color: #4CAF50;
+        stcolor: white;
+        position: sticky;
+        top: 0;
+    }
+</style>
+<form asp-controller="Stock" asp-action="Index" method="get">
+    <label class="label-width">Enter stock symbol or company:</label>
+    <input type="text" id="stock-symbol" name="symbol" value="" required>
+    <input type="submit" value="Search">
+</form>
+
+
+
+<script>$(document).ready(function () {
+        $("#stock-symbol").autocomplete({
+            source: function (request, response) {
+                // Make an AJAX call to the server to retrieve the search results
+                $.ajax({
+                    url: "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + request.term + "&apikey=HPN07DX7MCQ8NXNV",
+                    dataType: "json",
+                    success: function (data) {
+                        // Parse the JSON data and extract the search results
+                        var searchResults = data.bestMatches.map(function (match) {
+                            return {
+                                label: match["1. symbol"] + " - " + match["2. name"],
+                                value: match["1. symbol"]
+                            };
+                        });
+                        // Pass the search results to the response callback function
+                        response(searchResults);
+                    }
+                });
+            },
+            select: function (event, ui) {
+                // When user selects an option, set the value of the input to the value of the selected option
+                $("#stock-symbol").val(ui.item.value);
+            }
+        });
+    });</script>
+
+
+
+
+
+@if (Model != null)
+{
+
+    <h2>@Model.MetaData.Symbol.ToUpper() <div class="indent1"> Last Refreshed: @Model.MetaData.LastRefreshed </div> </h2>
+    <h4>
+        $@Math.Round(decimal.Parse(Model.StockData.First().Value.AdjustedClose), 2)
+        <span style="font-size: 14px;"> USD</span>
+        <div class="indent2"> Time Zone: @Model.MetaData.TimeZone </div>
+    </h4>
+    <div id="result"></div>
+
+    <script>
+    var stockData = JSON.parse('@Html.Raw(Json.Serialize(Model.StockData))');
+    var currentClose = parseFloat(stockData[Object.keys(stockData)[0]].adjustedClose);
+    var lastClose = parseFloat(stockData[Object.keys(stockData)[1]].adjustedClose);
+    var difference = (currentClose - lastClose).toFixed(3);
+    var percentDiff = ((difference / lastClose) * 100).toFixed(2);
+        if (difference >= 0) {
+            difference = "+" + difference;
+        }
+        if (difference >= 0) {
+            document.getElementById("result").innerHTML = "<span style='color: green'>" + difference.toString() + "(" + percentDiff.toString() + "%)" + "</span>";
+        } else {
+            document.getElementById("result").innerHTML = "<span style='color: red'>" + difference.toString() + "(" + percentDiff.toString() + "%)" + "</span>";
+            document.getElementById("result").innerHTML = percentDiff;
+
+        }    </script>
+
+
+
+    <div class="exchange"> <span>Exchange: <b>NASDAQ</b> </span> </div>
+    <!-- Add a div to hold the stock chart -->
+    <div id="chart-container">
+        <canvas id="stockChart" height="100"></canvas>
+    </div>
+
+    <!-- Add a div to hold the stock information  -->
+    <div style="display: grid; margin-left: 50px; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; grid-column-gap: 20px; grid-row-gap: 20px;">
+        <div style="margin-right: 120px;"><b>Open:</b> @Math.Round(decimal.Parse(Model.StockData.First().Value.Open), 2)</div>
+        <div style="margin-right: 120px;"><b>Dividends:</b> @Math.Round(decimal.Parse(Model.StockData.First().Value.DividendAmount), 2)</div>
+        <div style="margin-right: 120px;"><b>Volume:</b> @Math.Round(decimal.Parse(Model.StockData.First().Value.Volume), 2)</div>
+        <div style="margin-right: 120px;"><b>Adj Close:</b> @Math.Round(decimal.Parse(Model.StockData.First().Value.AdjustedClose), 2)</div>
+        <div style="margin-right: 120px;"><b>Low:</b> @Math.Round(decimal.Parse(Model.StockData.First().Value.Low), 2)</div>
+        <div style="margin-right: 120px;"><b>IPO date:</b> @Model.StockData.Last().Key</div>
+        <div style="margin-right: 120px;"><b>Close:</b> @Math.Round(decimal.Parse(Model.StockData.First().Value.Close), 2)</div>
+        <div style="margin-right: 120px;"><b>High:</b> @Math.Round(decimal.Parse(Model.StockData.First().Value.High), 2)</div>
+    </div>
+
+    <br>
+    <br>
+    <div style="background-color: #00C851; padding: 10px; text-align: center; font-size: 20px; font-weight: bold; color: white;">Stock Data History</div>
+    <br>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+    var labels = [];
+    var data = [];
+    var modifiedLabels = [];
+
+    var stockData = JSON.parse('@Html.Raw(Json.Serialize(Model.StockData))');
+    for (var key in stockData)
+    {
+        labels.push(key);
+        data.push(stockData[key]["adjustedClose"]);
+    }
+        // sort data - from old-new;
+        labels.reverse();
+        data.reverse();
+        // new array to hold month and year values
+        var newLabels = [];
+
+        // iterate through labels array and push only month and year values to newLabels
+        for (var i = 0; i < labels.length; i++) {
+            var label = labels[i];
+            var month = label.substring(5, 7); // substring to only get month and year
+            var year = label.substring(0, 4);
+
+            //if (i !=labels.length-1 && year == labels[i + 1].substring(0,4)) {
+            //    month = '__';
+            //    year = '--';
+            //}
+
+            if (month == 01) {
+                month = 'Jan'
+            }
+            else if (month == 02) {
+                month = 'Feb'
+            }
+            else if (month == 03) {
+                month = 'Mar'
+            }
+            else if (month == 04) {
+                month = 'Apr'
+            }
+            else if (month == 05) {
+                month = 'May'
+            }
+            else if (month == 06) {
+                month = 'Jun'
+            }
+            else if (month == 07) {
+                month = 'Jul'
+            }
+            else if (month == 08) {
+                month = 'Aug'
+            }
+            else if (month == 09) {
+                month = 'Sep'
+            }
+            else if (month == 10) {
+                month = 'Oct'
+            }
+            else if (month == 11) {
+                month = 'Nov'
+            }
+            else if (month == 12) {
+                month = 'Dec'
+            }
+            var monthAndYear = month + " " + year;
+            newLabels.push(monthAndYear);
+        }
+
+
+
+        //console.log(dateLabels);
+
+    var ctx = document.getElementById('stockChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: newLabels,
+            datasets: [{
+                label: 'Stock Price',
+                data: data,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+    </script>
+
+
+
+    <div class="table-container">
+
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Open</th>
+                <th>Close</th>
+                <th>Volume</th>
+                <th>Dividends</th>
+
+            </tr>
+            @foreach (var data in Model.StockData)
+            {
+                <tr>
+                    <td class="first-column"> @data.Key</td>
+                    <td>@data.Value.Open</td>
+                    <td>@data.Value.Close</td>
+                    <td>@data.Value.Volume</td>
+                    <td>@data.Value.DividendAmount</td>
+
+                </tr>
+            }
+        </table>
+    </div>
+}
+
+

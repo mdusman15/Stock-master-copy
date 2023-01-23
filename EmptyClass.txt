@@ -1,0 +1,41 @@
+﻿
+
+    < canvas id = "stockChart" ></ canvas >
+
+    < script src = "https://cdn.jsdelivr.net/npm/chart.js@2.8.0" ></ script >
+    < script >
+var labels = [];
+var data = [];
+foreach (var item in Model.StockData)
+{
+    labels.push(item.Key);
+    data.push(item.Value.Close);
+}
+    </ script >
+
+    < script > var ctx = document.getElementById('stockChart').getContext('2d');
+var chart = new Chart(ctx, {
+
+    type: 'line',
+    data: {
+
+        labels: labels,
+        datasets: [{
+                    label: 'Stock Price',
+            data: data,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+                }]
+            },
+            options:
+{
+scales:
+    {
+    y:
+        {
+        beginAtZero: false
+                    }
+    }
+}
+        });</ script >
