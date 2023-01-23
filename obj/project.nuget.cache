@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "G4V5OAvdWo+GF4cTM1Tigy6nF3pnzrCqWRHkaOW+UV0Q9XO1XxDwsxTnyeQr/t1c6/jlCPPX56F6vYHKYF2AuQ==",
+  "dgSpecHash": "qFNRvc0/smL6vq4anZp1sedJ0ug6/y6zfQcys1kMAwi0OFu8zzZLUOq3JMKdHrVxBdv0+uwvyg5X5Csodt6Dtw==",
   "success": true,
-  "projectFilePath": "/Users/mohammedusmaneghani/Downloads/Stock-master/Stock.csproj",
+  "projectFilePath": "/Users/mohammedusmaneghani/Downloads/StockMarketAnalysis/Stock.csproj",
   "expectedPackageFiles": [
     "/Users/mohammedusmaneghani/.nuget/packages/google.protobuf/3.21.9/google.protobuf.3.21.9.nupkg.sha512",
     "/Users/mohammedusmaneghani/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

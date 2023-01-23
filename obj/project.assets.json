@@ -9569,11 +9569,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/mohammedusmaneghani/Downloads/Stock-master/Stock.csproj",
+      "projectUniqueName": "/Users/mohammedusmaneghani/Downloads/StockMarketAnalysis/Stock.csproj",
       "projectName": "Stock",
-      "projectPath": "/Users/mohammedusmaneghani/Downloads/Stock-master/Stock.csproj",
+      "projectPath": "/Users/mohammedusmaneghani/Downloads/StockMarketAnalysis/Stock.csproj",
       "packagesPath": "/Users/mohammedusmaneghani/.nuget/packages/",
-      "outputPath": "/Users/mohammedusmaneghani/Downloads/Stock-master/obj/",
+      "outputPath": "/Users/mohammedusmaneghani/Downloads/StockMarketAnalysis/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/mohammedusmaneghani/.nuget/NuGet/NuGet.Config"
