@@ -10,6 +10,7 @@ This project is built using the .NET framework and the MVC architecture. The fro
 - Search for securities
 - Visualize stock data
 - Obtain historical data of the stock
+- Price changes compared to previosu month
 
 ## Upcoming Features
 - Front-end development
