@@ -1,5 +1,7 @@
 # StockMarketAnalysis
 
+The webapp has been deployed on Microsoft Azure and can be accessed by visiting the [link](https://stockmarketanalysis.azurewebsites.net/):
+
 ## Project Overview
 This is a .NET web application built for users who want to perform security analysis. The website is built upon the principles of Benjamin Graham's investing principles, who is considered to be the father of investing. This project aims to provide users with a comprehensive tool to analyze and understand the stock market.
 
