@@ -26,6 +26,6 @@ This project is built using the .NET framework and the MVC architecture. The fro
 - Open the project in Visual Studio
 - Build the solution
 - Run the project on the local development server
-- The application will be accessible at http://localhost: < portnumber>
+- The application will be accessible at https://stockmarketanalysis.azurewebsites.net/
   
  - Please note that an API key is required to access the stock data. The API key can be obtained by registering at AlphaVantage. The API key should be added to the appsettings.json file.
