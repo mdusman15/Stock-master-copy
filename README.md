@@ -1,6 +1,7 @@
 # StockMarketAnalysis
 
---Work in progress --
+###--Work in progress --
+
 The webapp has been deployed on Microsoft Azure and can be accessed by visiting this [link](https://stockmarketanalysis.azurewebsites.net/) - https://stockmarketanalysis.azurewebsites.net/
 
 ## Project Overview
